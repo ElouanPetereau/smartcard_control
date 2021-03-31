@@ -1,0 +1,7 @@
+venv/
+.idea/
+.gitignore
+__pycache__
+smartcard_control.egg-info
+build
+dist
