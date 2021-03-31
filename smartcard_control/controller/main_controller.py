@@ -23,6 +23,40 @@ devices_list_manager = None
 logging_level = logging.DEBUG
 
 
+def setup_parser():
+    global logging_level
+    parser = argparse.ArgumentParser(
+        description='''
+        smartcard_controler: A python project to debug and work with Smart cards
+        ''',
+        epilog='''
+        Report bugs to https://github.com/ElouanPetereau/smartcard_control
+        ''')
+
+    parser.add_argument("-v", "--verbose",
+                        action="count",
+                        help="Use (several times) to be more verbose")
+    # parser.add_argument("-a", "--arg",
+    #         action="store",
+    #         choices=['choice1', 'choice2'],
+    #         default='choice1',
+    #         help="help info (default: %(default)s)")
+    parser.add_argument('--version', action='version', version='%(prog)s 1.0')
+
+    args = parser.parse_args()
+
+    if not args.verbose:
+        logging_level = logging.CRITICAL
+    elif args.verbose == 1:
+        logging_level = logging.ERROR
+    elif args.verbose == 2:
+        logging_level = logging.WARNING
+    elif args.verbose == 3:
+        logging_level = logging.INFO
+    else:
+        logging_level = logging.DEBUG
+
+
 def main():
     # Log config
     global logging_level
@@ -44,6 +78,11 @@ def main():
         devices_list_manager.stop()
     except KeyboardInterrupt:
         pass
+
+
+def run():
+    setup_parser()
+    main()
 
 
 def main_menu():
