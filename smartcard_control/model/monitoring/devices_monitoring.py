@@ -136,13 +136,13 @@ class DeviceObservable(Observable):
         super().addObserver(observer)
 
         # Create the thread linked to the observer
-        from smartcard_control.model.CardMonitoring import CardMonitor
-        from smartcard_control.model.ReaderMonitoring import ReaderMonitor
+        from smartcard_control.model.monitoring.reader_monitoring import ReaderMonitor
+        from smartcard_control.model.monitoring.card_monitoring import CardMonitor
         if isinstance(self, CardMonitor):
-            from smartcard_control.model.CardMonitoring import CardMonitorThread
+            from smartcard_control.model.monitoring.card_monitoring import CardMonitorThread
             thread = CardMonitorThread(polling_timeout)
         elif isinstance(self, ReaderMonitor):
-            from smartcard_control.model.ReaderMonitoring import ReaderMonitorThread
+            from smartcard_control.model.monitoring.reader_monitoring import ReaderMonitorThread
             thread = ReaderMonitorThread(polling_timeout)
         else:
             thread = None

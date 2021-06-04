@@ -6,9 +6,9 @@ from smartcard.CardType import AnyCardType
 from smartcard.Exceptions import CardConnectionException
 from smartcard.scard import SCARD_LEAVE_CARD, SCARD_SHARE_SHARED, SCARD_RESET_CARD, SCARD_UNPOWER_CARD
 from smartcard.util import toHexString
+from smartcard_control.model.monitoring.reader_monitoring import ReaderObserver, ReaderMonitor
+from smartcard_control.model.monitoring.card_monitoring import CardObserver, CardMonitor
 
-from smartcard_control.model.CardMonitoring import CardObserver, CardMonitor
-from smartcard_control.model.ReaderMonitoring import ReaderObserver, ReaderMonitor
 from smartcard_control.utils.apdu_utils import parseIsoApduResponse
 
 
