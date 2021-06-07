@@ -141,7 +141,7 @@ class CardMonitorThread(DeviceMonitorThread):
                 logging.debug("listening for changes...")
                 hresult, new_readers_state = SCardGetStatusChange(self.observable.hcontext, self.polling_timeout, self.observable.getReadersStateList())
                 logging.debug("changes acquired!")
-                logging.debug("states: %s", self.observable.getReadersStateList())
+                logging.debug("states: %s", new_readers_state)
 
                 # Listen only to others result errors
                 if hresult != SCARD_S_SUCCESS and hresult != SCARD_E_UNKNOWN_READER and hresult != SCARD_E_TIMEOUT:
