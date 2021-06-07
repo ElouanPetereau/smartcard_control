@@ -16,15 +16,21 @@ from smartcard_control.utils import apdu_utils
 from smartcard_control.view import menu_util
 from smartcard_control.view.menu_util import printChooseShareMode
 
+VERSION_INFO = (1, 0, 1, 0)
+VERSION_STR = '%i.%i.%i' % VERSION_INFO[:3]
+
 share_mode = SCARD_SHARE_SHARED
 disposition = SCARD_LEAVE_CARD
 card_manager = None
 devices_list_manager = None
 logging_level = logging.DEBUG
+logging_file = None
 
 
 def setup_parser():
-    global logging_level
+    global logging_level, logging_file
+
+    DEFAULT_LOGGING_FILE = "smartcard_control.log"
     parser = argparse.ArgumentParser(
         description='''
         smartcard_controler: A python project to debug and work with Smart cards
@@ -35,13 +41,14 @@ def setup_parser():
 
     parser.add_argument("-v", "--verbose",
                         action="count",
-                        help="Use (several times) to be more verbose")
-    # parser.add_argument("-a", "--arg",
-    #         action="store",
-    #         choices=['choice1', 'choice2'],
-    #         default='choice1',
-    #         help="help info (default: %(default)s)")
-    parser.add_argument('--version', action='version', version='%(prog)s 1.0')
+                        help="use (several times) to be more verbose")
+    parser.add_argument("-l", "--logfile",
+                        nargs="?",
+                        action="store",
+                        const=DEFAULT_LOGGING_FILE,
+                        # choices=['choice1', 'choice2'],
+                        help="write project logs in a file instead of the current console (default: ./{})".format(DEFAULT_LOGGING_FILE))
+    parser.add_argument('--version', action='version', version="%(prog)s {}".format(VERSION_STR))
 
     args = parser.parse_args()
 
@@ -56,11 +63,17 @@ def setup_parser():
     else:
         logging_level = logging.DEBUG
 
+    if args.logfile is not None:
+        logging_file = args.logfile
+
 
 def main():
     # Log config
-    global logging_level
-    logging.basicConfig(level=logging_level, format="%(asctime)s  [%(levelname)s] %(module)s/%(lineno)d - %(message)s")
+    global logging_level, logging_file
+    if logging_file is not None:
+        logging.basicConfig(level=logging_level, filename=logging_file, format="%(asctime)s  [%(levelname)s] %(module)s/%(lineno)d - %(message)s")
+    else:
+        logging.basicConfig(level=logging_level, format="%(asctime)s  [%(levelname)s] %(module)s/%(lineno)d - %(message)s")
 
     global devices_list_manager
     global card_manager
