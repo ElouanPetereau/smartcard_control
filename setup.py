@@ -18,6 +18,7 @@ setup(name="smartcard_control",
       version=VERSION_STR,
       description="Smartcard control tool",
       author="Elouan Petereau",
+      author_email="elouan.p@gmail.com",
       url="https://github.com/ElouanPetereau/smartcard_control",
       packages=find_packages(include=['smartcard_control', 'smartcard_control.*']),
       entry_points={
@@ -30,11 +31,6 @@ setup(name="smartcard_control",
           'Intended Audience :: Developers',
           'Operating System :: Unix',
           'Operating System :: Microsoft :: Windows',
-          'Programming Language :: Python :: 3.3',
-          'Programming Language :: Python :: 3.4',
-          'Programming Language :: Python :: 3.5',
-          'Programming Language :: Python :: 3.6',
-          'Programming Language :: Python :: 3.7',
-          'Programming Language :: Python :: 3.8',
+          'Programming Language :: Python :: 3'
       ]
       )
